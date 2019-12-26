@@ -1,0 +1,74 @@
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<div style="text-align:left">
+  <h1><i class="fa fa-cloud" aria-hidden="true"></i> {{title}}</h1>
+  <form (submit)="searchWeather()" >
+    <input type="text" name="search_city" [(ngModel)]= "city_name" placeholder="Search by city,state..." required>
+    <button><i class="fa fa-search" aria-hidden="true"></i>
+    </button>
+  </form>
+</div>
+<div *ngIf= "city!=null" class="info">
+  <div *ngIf ="degreeFtemp">
+    <div class="details">
+      <h2><i class="fa fa-map-marker" aria-hidden="true"></i>
+        {{city.name}} </h2>
+      <p>Now: {{(city.main.temp | number:'1.0-0') + " °F"}}</p>
+      <div *ngIf="city.weather[0].main == 'Clouds'" class="image">
+        <img src="https://thumbs.gfycat.com/UniformBabyishBarbet-size_restricted.gif" alt="Image of location of weather here">
+      </div>
+      <div *ngIf="city.weather[0].main == 'Rain'" class="image">
+        <img src="https://myrealdomain.com/images/animated-pictures-of-rain-3.gif" alt="Image of location of weather here">
+      </div>
+      <div *ngIf="city.weather[0].main == 'Clear'" class="image">
+        <img src="https://ak5.picdn.net/shutterstock/videos/32781985/thumb/1.jpg" alt="Image of weather">
+      </div>
+      <div *ngIf="city.weather[0].main == 'Mist' ||  city.weather[0].main == 'Smoke'" class="image">
+        <img src="https://cdn.pixabay.com/photo/2013/04/01/09/21/fog-98505_960_720.png" alt="Image of weather">
+      </div>
+      <p>Status: {{city.weather[0].main}}</p>
+      <p>Humidity: {{city.main.humidity}}%</p>
+      <p>High: {{(city.main.temp_max | number:'1.0-0') + " °F" }}</p>
+      <p>Low: {{(city.main.temp_min | number:'1.0-0') + " °F" }}  </p>
+    </div>
+  </div>
+  <div *ngIf ="degreeCtemp">
+      <div class="details">
+        <h2><i class="fa fa-map-marker" aria-hidden="true"></i>
+          {{city.name}} </h2>
+        <p>Now: {{((city.main.temp -32)*5/9 | number:'1.0-0') + " °C"}}</p>
+        <div *ngIf="city.weather[0].main == 'Clouds'" class="image">
+          <img src="https://thumbs.gfycat.com/UniformBabyishBarbet-size_restricted.gif" alt="Image of location of weather here">
+        </div>
+        <div *ngIf="city.weather[0].main == 'Rain'" class="image">
+          <img src="https://myrealdomain.com/images/animated-pictures-of-rain-3.gif" alt="Image of location of weather here">
+        </div>
+        <div *ngIf="city.weather[0].main == 'Clear'" class="image">
+          <img src="https://ak5.picdn.net/shutterstock/videos/32781985/thumb/1.jpg" alt="Image of weather">
+        </div>
+        <div *ngIf="city.weather[0].main == 'Mist' ||  city.weather[0].main == 'Smoke'" class="image">
+          <img src="https://cdn.pixabay.com/photo/2013/04/01/09/21/fog-98505_960_720.png" alt="Image of weather">
+        </div>
+          <p>Status: {{city.weather[0].main}}</p>
+        <p>Humidity: {{city.main.humidity}}%</p>
+        <p>High: {{((city.main.temp_max -32)*5/9  | number:'1.0-0') + " °C" }}</p>
+        <p>Low: {{((city.main.temp_min -32)*5/9  | number:'1.0-0') + " °C" }}  </p>
+      </div>
+    </div>
+</div>
+<div *ngIf ="degreeFtemp" class="convert_button">
+  <a (click) = "convertToCelsius()"><i class="fa fa-thermometer-empty" aria-hidden="true"></i> Convert To Celsius</a>
+</div>
+<div *ngIf ="degreeCtemp" class="convert_button">
+  <a (click) = "convertToFahrenheit()"><i class="fa fa-thermometer-empty" aria-hidden="true"></i> Convert To Fahrenheit</a>
+</div>
+<div class="nav">
+  <span>Popular Locations: </span>
+  <a (click) = "getSeattle()">Seattle, WA</a>|
+  <a (click) = "getSanJose()">San Jose, CA</a>|
+  <a (click) = "getBurbank()">Burbank, CA</a>|
+  <a (click) = "getDallas()">Dallas, TX</a>
+</div>
+<div class= "footer">
+  <p> Copyright © 2019 Coded By Ellie Zhao using Angular (TypeScript), Express, Node.js, OpenWeather API</p>
+</div>
+<router-outlet></router-outlet>
